@@ -7,13 +7,17 @@ function Promise(fn) {
   if (typeof fn !== 'function') throw new TypeError('not a function')
   var state = null
     , value = null
-    , resolved = false
     , deferreds = []
+    , resolved = false
 
   this.then = function(onFulfilled, onRejected) {
     return new Promise(function(resolve, reject) {
       handle({ onFulfilled: onFulfilled, onRejected: onRejected, resolve: resolve, reject: reject })
     })
+  }
+
+  this.isResolved = function(){
+    return !!resolved
   }
 
   function handle(deferred) {
